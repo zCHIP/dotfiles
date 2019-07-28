@@ -4,7 +4,7 @@ export LANG="en_US.UTF-8"
 ulimit -n 3000
 
 # Adds SSH key
-ssh-add ~/.ssh/temnikov_id_rsa 2>/dev/null
+#ssh-add ~/.ssh/id_rsa 2>/dev/null
 
 ######
 
@@ -91,7 +91,6 @@ alias python2=python2.7
 alias lzd="lazydocker"
 
 ### ZSH Configuration
-
 export DEFAULT_USER=`whoami`
 
 # Path to your oh-my-zsh installation.
@@ -122,9 +121,6 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 source ${ZSH}/oh-my-zsh.sh
-
-
-#export KITCHENLIB_SSH_KEY=~/.ssh/temnikov_id_rsa KITCHENLIB_USERNAME=yh00676
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
