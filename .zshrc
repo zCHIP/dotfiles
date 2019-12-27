@@ -109,9 +109,11 @@ export UPDATE_ZSH_DAYS=7
 plugins=(
   osx
   git
+  docker
   pipenv
   zsh-autosuggestions
   zsh-nvm
+  zsh-syntax-highlighting
 )
 
 # ZSH Autosuggestions config
@@ -129,8 +131,3 @@ if [ -f '/Users/temnikovgennadiy/google-cloud-sdk/path.zsh.inc' ]; then source '
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/temnikovgennadiy/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/temnikovgennadiy/google-cloud-sdk/completion.zsh.inc'; fi
-
-# Syntax highlight
-if [ -f '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]; then
-  source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
-fi
