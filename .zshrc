@@ -154,5 +154,8 @@ source ${ZSH}/oh-my-zsh.sh
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # GCP SDK
+export CLOUDSDK_PYTHON=/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+export CLOUDSDK_GSUTIL_PYTHON=/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+export CLOUDSDK_BQ_PYTHON=/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
