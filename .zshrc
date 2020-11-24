@@ -1,18 +1,20 @@
+## .zshrc
+
+###### System
+
 export LANG="en_US.UTF-8"
 
 # Set ulimit
 ulimit -n 3000
 
-# Adds SSH key
-#ssh-add ~/.ssh/id_rsa 2>/dev/null
 
-######
+###### PATHs and MANPATHs
 
 PATH="${HOME}/bin:/usr/local/sbin:${PATH}"
 PATH="/usr/local/bin:${PATH}"
 
+# ChefDK
 PATH="/opt/chefdk/bin:${PATH}"
-PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
 
 # icu4c
 PATH="/usr/local/opt/icu4c/bin:${PATH}"
@@ -33,33 +35,55 @@ MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}"
 
 PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
 
-######
+# Python 3.9
+PATH="/usr/local/opt/python@3.9/bin:${PATH}"
+PATH="/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
 
-# OpenSSL libraries for compilers
-export LDFLAGS="-L/usr/local/opt/openssl/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl/include"
+# Sphinx Doc
+PATH="/usr/local/opt/sphinx-doc/bin:${PATH}"
 
-# export LDFLAGS="-L/usr/local/opt/icu4c/lib"
-# export CPPFLAGS="-I/usr/local/opt/icu4c/include"
+# OpenSSL
+PATH="/usr/local/opt/openssl@1.1/bin:${PATH}"
 
-######
+# Kubebuilder
+PATH="${PATH}:/usr/local/kubebuilder/bin"
+
+# Ruby Gems
+PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
 
 # Global NPM package configuration
 NPM_PACKAGES="${HOME}/.npm-packages"
 PATH="$NPM_PACKAGES/bin:$PATH"
+MANPATH="$NPM_PACKAGES/share/man:${MANPATH}"
+
+
+###### Libraries for compilers
+
+# OpenSSL
+LDFLAGS="-L/usr/local/opt/openssl/lib"
+CPPFLAGS="-I/usr/local/opt/openssl/include"
+
+# icu4c
+LDFLAGS="-L/usr/local/opt/icu4c/lib ${LDFLAGS}"
+CPPFLAGS="-I/usr/local/opt/icu4c/include ${CPPFLAGS}"
+
+
+###### Exports
+
+export PATH
+export LDFLAGS
+export CPPFLAGS
+export MANPATH
 
 # Go development
 export GOPATH="${HOME}/.go"
-export GOROOT="$(brew --prefix golang)/libexec"
-export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 test -d "${GOPATH}" || mkdir "${GOPATH}"
 test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Groovy home
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
-
-# Ruby Gems
-PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
 
 # DSE home
 DSE_HOME="${HOME}/dse"
@@ -67,11 +91,8 @@ DSE_HOME="${HOME}/dse"
 # Makes pipenv create virtual envs in the project's folder instead of ~/.local/share/virtualenvs/
 export PIPENV_VENV_IN_PROJECT=true
 
-# Man
-export MANPATH="$NPM_PACKAGES/share/man:${MANPATH}"
-export PATH
 
-### Aliases
+###### Aliases
 eval "$(dircolors)"
 
 if ls --color -d . >/dev/null 2>&1; then  # GNU ls
@@ -85,12 +106,12 @@ if ls --color -d . >/dev/null 2>&1; then  # GNU ls
   alias l="ls -l -a"
 fi
 
-alias ng="npm list -g --depth=0 2>/dev/null"
+alias nglob="npm list -g --depth=0 2>/dev/null"
 alias nl="npm list --depth=0 2>/dev/null"
 alias python2=python2.7
-alias lzd="lazydocker"
 
-### ZSH Configuration
+
+######  ZSH Configuration
 export DEFAULT_USER=`whoami`
 
 # Path to your oh-my-zsh installation.
@@ -98,18 +119,20 @@ export ZSH=${HOME}/.oh-my-zsh
 
 ZSH_THEME="powerlevel9k"
 
-# ZSH Theme Powerline9k configuration
+# Powerline9k configuration for ZSH
 VIRTUAL_ENV_DISABLE_PROMPT=1
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context virtualenv dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs kubecontext time)
 
-# Uncomment the following line to change how often to auto-update (in days).
+# how often to auto-update (in days)
 export UPDATE_ZSH_DAYS=7
 
 plugins=(
   osx
   git
   docker
+  kubectl
+  helm
   pipenv
   zsh-autosuggestions
   zsh-nvm
@@ -124,10 +147,12 @@ ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 source ${ZSH}/oh-my-zsh.sh
 
+
+###### etc
+
+# iterm2 integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/temnikovgennadiy/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/temnikovgennadiy/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/temnikovgennadiy/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/temnikovgennadiy/google-cloud-sdk/completion.zsh.inc'; fi
+# GCP SDK
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"

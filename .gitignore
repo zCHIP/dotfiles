@@ -1,0 +1,20 @@
+# Global .gitignore
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDEA
+.idea/
+
+# vi
+*~
+
+# Java
+**/*.iml
+
+# General
+log/
+*.log

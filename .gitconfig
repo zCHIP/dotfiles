@@ -1,0 +1,7 @@
+[user]
+	name = zCHIP
+	email = zerochip@gmail.com
+[core]
+	excludesfile = ~/.gitignore
+[pull]
+	ff = only
