@@ -115,6 +115,9 @@ alias python2=python2.7
 # Editors
 alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 
+# Dotfiles repo
+alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
 ######  ZSH Configuration
 export DEFAULT_USER=`whoami`
 
