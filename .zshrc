@@ -79,7 +79,7 @@ export MANPATH
 export GOPATH="${HOME}/.go"
 test -d "${GOPATH}" || mkdir "${GOPATH}"
 test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
-export GOROOT="$(brew --prefix golang)/libexec"
+export GOROOT="/usr/local/opt/go/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Groovy home
@@ -94,7 +94,6 @@ export PIPENV_VENV_IN_PROJECT=true
 
 ###### Aliases
 eval "$(dircolors)"
-
 if ls --color -d . >/dev/null 2>&1; then  # GNU ls
   export COLUMNS  # Remember columns for subprocesses.
   eval "$(dircolors)"
@@ -106,10 +105,15 @@ if ls --color -d . >/dev/null 2>&1; then  # GNU ls
   alias l="ls -l -a"
 fi
 
+# NPM
 alias nglob="npm list -g --depth=0 2>/dev/null"
 alias nl="npm list --depth=0 2>/dev/null"
+
+# Python
 alias python2=python2.7
 
+# Editors
+alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 
 ######  ZSH Configuration
 export DEFAULT_USER=`whoami`
@@ -133,10 +137,11 @@ plugins=(
   docker
   kubectl
   helm
-  pipenv
+  httpie
   zsh-autosuggestions
-  zsh-nvm
   zsh-syntax-highlighting
+#  pipenv
+#  zsh-nvm
 )
 
 # ZSH Autosuggestions config

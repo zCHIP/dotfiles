@@ -1,7 +1,16 @@
 [user]
-	name = zCHIP
+	name = Gennady Temnikov
 	email = zerochip@gmail.com
+	signingkey = 2B5B7456B48C8155
 [core]
 	excludesfile = ~/.gitignore
+[color]
+	diff = auto
+	status = auto
+	branch = auto	
 [pull]
 	ff = only
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
