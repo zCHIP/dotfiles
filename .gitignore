@@ -1,5 +1,8 @@
 # Global .gitignore
 
+# Ignore '.dotfiles' repo
+.dotfiles
+
 # Mac
 .DS_Store
 
