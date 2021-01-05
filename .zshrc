@@ -143,9 +143,12 @@ plugins=(
   httpie
   zsh-autosuggestions
   zsh-syntax-highlighting
-#  pipenv
-#  zsh-nvm
+  zsh-nvm
 )
+
+# Enable nvm's plugin built in lazy loading
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
 
 # ZSH Autosuggestions config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
@@ -157,6 +160,12 @@ source ${ZSH}/oh-my-zsh.sh
 
 
 ###### etc
+
+# Simple profiler for measuring the shell’s load time
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
 
 # iterm2 integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
