@@ -3,6 +3,7 @@
 ###### System
 
 export LANG="en_US.UTF-8"
+export TERM="xterm-256color"
 
 # Set ulimit
 ulimit -n 3000
@@ -47,6 +48,9 @@ PATH="/usr/local/opt/openssl@1.1/bin:${PATH}"
 
 # Kubebuilder
 PATH="${PATH}:/usr/local/kubebuilder/bin"
+
+# Krew (kubectl plugin manager)
+PATH="${PATH}:${HOME}/.krew/bin"
 
 # Ruby Gems
 PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
@@ -124,7 +128,7 @@ export DEFAULT_USER=`whoami`
 # Path to your oh-my-zsh installation.
 export ZSH=${HOME}/.oh-my-zsh
 
-ZSH_THEME="powerlevel9k"
+ZSH_THEME="powerlevel10k"
 
 # Powerline9k configuration for ZSH
 VIRTUAL_ENV_DISABLE_PROMPT=1
