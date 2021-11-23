@@ -34,6 +34,7 @@ esac
 ###### PATHs and MANPATHs
 
 PATH="${BREW_BASE_PATH}/bin:${PATH}"
+PATH="${BREW_BASE_PATH}/sbin:${PATH}"
 
 # ChefDK
 PATH="/opt/chefdk/bin:${PATH}"
