@@ -1,3 +1,6 @@
+# Determine the CPU architecture
+CPU_ARCH=$(uname -p)
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -16,45 +19,53 @@ export TERM="xterm-256color"
 ulimit -n 3000
 
 
+case ${CPU_ARCH} in
+  arm)
+    BREW_BASE_PATH="/opt/homebrew"
+    ;;
+  i386)
+    BREW_BASE_PATH="/usr/local"
+    ;;
+  *)
+    BREW_BASE_PATH="/usr/local"
+    ;;
+esac
+
 ###### PATHs and MANPATHs
 
-PATH="${HOME}/bin:/usr/local/sbin:${PATH}"
-PATH="/usr/local/bin:${PATH}"
+PATH="${BREW_BASE_PATH}/bin:${PATH}"
 
 # ChefDK
 PATH="/opt/chefdk/bin:${PATH}"
 
 # icu4c
-PATH="/usr/local/opt/icu4c/bin:${PATH}"
-PATH="/usr/local/opt/icu4c/sbin:${PATH}"
+PATH="${BREW_BASE_PATH}/opt/icu4c/bin:${PATH}"
+PATH="${BREW_BASE_PATH}/opt/icu4c/sbin:${PATH}"
 
 # GNU core utils
-PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+PATH="${BREW_BASE_PATH}/opt/coreutils/libexec/gnubin:${PATH}"
+MANPATH="${BREW_BASE_PATH}/opt/coreutils/libexec/gnuman:${MANPATH}"
 
-PATH="/usr/local/opt/findutils/libexec/gnubin:${PATH}"
-MANPATH="/usr/local/opt/findutils/libexec/gnuman:${MANPATH}"
+PATH="${BREW_BASE_PATH}/opt/findutils/libexec/gnubin:${PATH}"
+MANPATH="${BREW_BASE_PATH}/opt/findutils/libexec/gnuman:${MANPATH}"
 
-PATH="/usr/local/opt/gnu-tar/libexec/gnubin:${PATH}"
-MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:${MANPATH}"
+PATH="${BREW_BASE_PATH}/opt/gnu-tar/libexec/gnubin:${PATH}"
+MANPATH="${BREW_BASE_PATH}/opt/gnu-tar/libexec/gnuman:${MANPATH}"
 
-PATH="/usr/local/opt/gnu-sed/libexec/gnubin:${PATH}"
-MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}"
+PATH="${BREW_BASE_PATH}/opt/gnu-sed/libexec/gnubin:${PATH}"
+MANPATH="${BREW_BASE_PATH}/opt/gnu-sed/libexec/gnuman:${MANPATH}"
 
-PATH="/usr/local/opt/gnu-getopt/bin:${PATH}"
+PATH="${BREW_BASE_PATH}/opt/gnu-getopt/bin:${PATH}"
 
 # Python 3.9
-PATH="/usr/local/opt/python@3.9/bin:${PATH}"
-PATH="/usr/local/opt/python@3.9/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
+PATH="${BREW_BASE_PATH}/opt/python@3.9/bin:${PATH}"
+PATH="${BREW_BASE_PATH}/opt/python@3.9/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
 
 # Sphinx Doc
-PATH="/usr/local/opt/sphinx-doc/bin:${PATH}"
+PATH="${BREW_BASE_PATH}/opt/sphinx-doc/bin:${PATH}"
 
 # OpenSSL
-PATH="/usr/local/opt/openssl@1.1/bin:${PATH}"
-
-# Kubebuilder
-PATH="${PATH}:/usr/local/kubebuilder/bin"
+PATH="${BREW_BASE_PATH}/opt/openssl@1.1/bin:${PATH}"
 
 # Krew (kubectl plugin manager)
 PATH="${PATH}:${HOME}/.krew/bin"
@@ -64,19 +75,19 @@ PATH="${HOME}/.gem/ruby/2.3.0/bin:${PATH}"
 
 # Global NPM package configuration
 NPM_PACKAGES="${HOME}/.npm-packages"
-PATH="$NPM_PACKAGES/bin:$PATH"
-MANPATH="$NPM_PACKAGES/share/man:${MANPATH}"
+PATH="${NPM_PACKAGES}/bin:${PATH}"
+MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
 
 
 ###### Libraries for compilers
 
 # OpenSSL
-LDFLAGS="-L/usr/local/opt/openssl/lib"
-CPPFLAGS="-I/usr/local/opt/openssl/include"
+LDFLAGS="-L${BREW_BASE_PATH}/opt/openssl/lib"
+CPPFLAGS="-I${BREW_BASE_PATH}/opt/openssl/include"
 
 # icu4c
-LDFLAGS="-L/usr/local/opt/icu4c/lib ${LDFLAGS}"
-CPPFLAGS="-I/usr/local/opt/icu4c/include ${CPPFLAGS}"
+LDFLAGS="-L${BREW_BASE_PATH}/opt/icu4c/lib ${LDFLAGS}"
+CPPFLAGS="-I${BREW_BASE_PATH}/opt/icu4c/include ${CPPFLAGS}"
 
 
 ###### Exports
@@ -90,11 +101,11 @@ export MANPATH
 export GOPATH="${HOME}/.go"
 test -d "${GOPATH}" || mkdir "${GOPATH}"
 test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
-export GOROOT="/usr/local/opt/go/libexec"
+export GOROOT="${BREW_BASE_PATH}/opt/go/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Groovy home
-export GROOVY_HOME=/usr/local/opt/groovy/libexec
+export GROOVY_HOME=${BREW_BASE_PATH}/opt/groovy/libexec
 
 # DSE home
 DSE_HOME="${HOME}/dse"
@@ -103,18 +114,24 @@ DSE_HOME="${HOME}/dse"
 export PIPENV_VENV_IN_PROJECT=true
 
 
-###### Aliases
-eval "$(dircolors)"
-if ls --color -d . >/dev/null 2>&1; then  # GNU ls
-  export COLUMNS  # Remember columns for subprocesses.
-  eval "$(dircolors)"
-  function ls {
-    command ls -F -h --color=always -v --author --time-style=long-iso -C "$@" | less -R -X -F
-  }
-  alias ll="ls -la"
-  alias lt="ls -ltr"
-  alias l="ls -l -a"
+###### Colors
+if command -v dircolors &> /dev/null; then
+  if test -f "${HOME}/.dircolors.256dark"; then
+    eval $(dircolors "${HOME}/.dircolors.256dark")
+  fi
+  if ls --color -d . >/dev/null 2>&1; then  # GNU ls
+    export COLUMNS  # Remember columns for subprocesses.
+    function ls {
+      command ls -F -h --color=always -v --author --time-style=long-iso -C "$@" | less -R -X -F
+    }
+  fi
 fi
+
+###### Aliases
+
+alias ll="ls -la"
+alias lt="ls -ltr"
+alias l="ls -l -a"
 
 # NPM
 alias nglob="npm list -g --depth=0 2>/dev/null"
@@ -130,7 +147,7 @@ alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 ######  ZSH Configuration
-export DEFAULT_USER=`whoami`
+export DEFAULT_USER=$(whoami)
 
 # Path to your oh-my-zsh installation.
 export ZSH=${HOME}/.oh-my-zsh
@@ -182,11 +199,11 @@ timezsh() {
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # GCP SDK
-export CLOUDSDK_PYTHON=/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
-export CLOUDSDK_GSUTIL_PYTHON=/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
-export CLOUDSDK_BQ_PYTHON=/usr/local/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+export CLOUDSDK_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+export CLOUDSDK_GSUTIL_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+export CLOUDSDK_BQ_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+source "${BREW_BASE_PATH}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "${BREW_BASE_PATH}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
