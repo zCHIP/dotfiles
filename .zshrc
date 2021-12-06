@@ -79,6 +79,8 @@ NPM_PACKAGES="${HOME}/.npm-packages"
 PATH="${NPM_PACKAGES}/bin:${PATH}"
 MANPATH="${NPM_PACKAGES}/share/man:${MANPATH}"
 
+# Local bin
+PATH="${PATH}:${HOME}/bin"
 
 ###### Libraries for compilers
 
