@@ -2,19 +2,14 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 syntax on
 
-" Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" enable vim-plug
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'pedrohdz/vim-yaml-folds'
+Plug 'junegunn/vim-easy-align'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
-" /Vundle
+" Initialize plugin system
+call plug#end()
+
 
 " Yaml file handling
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
