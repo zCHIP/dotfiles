@@ -92,11 +92,31 @@ CPPFLAGS="-I${BREW_BASE_PATH}/opt/openssl/include"
 LDFLAGS="-L${BREW_BASE_PATH}/opt/icu4c/lib ${LDFLAGS}"
 CPPFLAGS="-I${BREW_BASE_PATH}/opt/icu4c/include ${CPPFLAGS}"
 
+# sqlite3
+LDFLAGS="-L${BREW_BASE_PATH}/opt/sqlite/lib ${LDFLAGS}"
+CPPFLAGS="-I${BREW_BASE_PATH}/opt/sqlite/include ${CPPFLAGS}"
+PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${BREW_BASE_PATH}/opt/sqlite/lib/pkgconfig"
+
+# pixman
+LDFLAGS="-L${BREW_BASE_PATH}/opt/pixman/lib ${LDFLAGS}"
+CPPFLAGS="-I${BREW_BASE_PATH}/opt/pixman/include ${CPPFLAGS}"
+PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${BREW_BASE_PATH}/opt/pixman/lib/pkgconfig"
+
+# cairo
+LDFLAGS="-L${BREW_BASE_PATH}/opt/cairo/lib ${LDFLAGS}"
+CPPFLAGS="-I${BREW_BASE_PATH}/opt/cairo/include ${CPPFLAGS}"
+PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${BREW_BASE_PATH}/opt/cairo/lib/pkgconfig"
+
+# pango
+LDFLAGS="-L${BREW_BASE_PATH}/opt/pango/lib ${LDFLAGS}"
+CPPFLAGS="-I${BREW_BASE_PATH}/opt/pango/include ${CPPFLAGS}"
+PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${BREW_BASE_PATH}/opt/pango/lib/pkgconfig"
 
 ###### Exports
 
 export PATH
 export LDFLAGS
+export PKG_CONFIG_PATH
 export CPPFLAGS
 export MANPATH
 
@@ -210,3 +230,19 @@ source "${BREW_BASE_PATH}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/comp
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(${HOME}'/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "${HOME}/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="${HOME}/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
