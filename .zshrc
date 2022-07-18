@@ -56,6 +56,9 @@ MANPATH="${BREW_BASE_PATH}/opt/gnu-tar/libexec/gnuman:${MANPATH}"
 PATH="${BREW_BASE_PATH}/opt/gnu-sed/libexec/gnubin:${PATH}"
 MANPATH="${BREW_BASE_PATH}/opt/gnu-sed/libexec/gnuman:${MANPATH}"
 
+PATH="${BREW_BASE_PATH}/opt/grep/libexec/gnubin:${PATH}"
+MANPATH="${BREW_BASE_PATH}/opt/grep/libexec/gnuman:${MANPATH}"
+
 PATH="${BREW_BASE_PATH}/opt/gnu-getopt/bin:${PATH}"
 
 # Python 3.9
