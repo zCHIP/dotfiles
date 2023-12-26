@@ -61,10 +61,6 @@ MANPATH="${BREW_BASE_PATH}/opt/grep/libexec/gnuman:${MANPATH}"
 
 PATH="${BREW_BASE_PATH}/opt/gnu-getopt/bin:${PATH}"
 
-# Python 3.9
-PATH="${BREW_BASE_PATH}/opt/python@3.9/bin:${PATH}"
-PATH="${BREW_BASE_PATH}/opt/python@3.9/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
-
 # Sphinx Doc
 PATH="${BREW_BASE_PATH}/opt/sphinx-doc/bin:${PATH}"
 
@@ -133,9 +129,6 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 # Groovy home
 export GROOVY_HOME=${BREW_BASE_PATH}/opt/groovy/libexec
 
-# DSE home
-DSE_HOME="${HOME}/dse"
-
 # Makes pipenv create virtual envs in the project's folder instead of ~/.local/share/virtualenvs/
 export PIPENV_VENV_IN_PROJECT=true
 
@@ -148,7 +141,7 @@ if command -v dircolors &> /dev/null; then
   if ls --color -d . >/dev/null 2>&1; then  # GNU ls
     export COLUMNS  # Remember columns for subprocesses.
     function ls {
-      command ls -F -h --color=always -v --author --time-style=long-iso -C "$@" | less -R -X -F
+      command ls -F -h --color=always -v --author --time-style=long-iso -C "$@"
     }
   fi
 fi
@@ -178,7 +171,7 @@ export DEFAULT_USER=$(whoami)
 # Path to your oh-my-zsh installation.
 export ZSH=${HOME}/.oh-my-zsh
 
-ZSH_THEME="powerlevel10k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Powerline9k configuration for ZSH
 VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -225,25 +218,25 @@ timezsh() {
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # GCP SDK
-export CLOUDSDK_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
-export CLOUDSDK_GSUTIL_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
-export CLOUDSDK_BQ_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
-source "${BREW_BASE_PATH}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "${BREW_BASE_PATH}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+#export CLOUDSDK_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+#export CLOUDSDK_GSUTIL_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+#export CLOUDSDK_BQ_PYTHON=${BREW_BASE_PATH}/opt/python@3.8/Frameworks/Python.framework/Versions/3.8/bin/python3.8
+#source "${BREW_BASE_PATH}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+#source "${BREW_BASE_PATH}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$(${HOME}'/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "${HOME}/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "${HOME}/miniforge3/etc/profile.d/conda.sh"
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
     else
-        export PATH="${HOME}/miniforge3/bin:$PATH"
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
     fi
 fi
 unset __conda_setup
